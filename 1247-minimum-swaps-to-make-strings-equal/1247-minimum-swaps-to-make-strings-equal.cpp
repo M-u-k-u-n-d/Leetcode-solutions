@@ -1,7 +1,6 @@
 class Solution {
 public:
     int minimumSwap(string s1, string s2) {
-        // if(s1 == s2) return 0;
         int x=0 , y=0;
         for(int i=0; i<s1.length(); i++){
            if(s1[i] != s2[i]) {
@@ -10,7 +9,7 @@ public:
            }
         }
         if((x+y)%2 != 0) return -1;
-        int ans = ceil (x*1.0/2) + ceil(y*1.0/2);
+        int ans = (x+1)/2 + (y+1)/2;
         return ans;
     }
 };

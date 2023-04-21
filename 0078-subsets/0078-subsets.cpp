@@ -1,26 +1,18 @@
 class Solution {
-    void f(vector<int> &a,vector<int>v,set<vector<int>> &ans,int ind){
-        if(ind == a.size()){
-            ans.insert(v);
-            return;
-        }
-        for(int i=ind; i<a.size(); i++){
-            v.push_back(a[i]);
-            f(a,v,ans,i+1);
-            v.pop_back();
-            f(a,v,ans,i+1);
-        }
-        return;
-    } 
 public:
     vector<vector<int>> subsets(vector<int>& nums) {
-       set<vector<int>> ans;
-        vector<int> v;
-     f(nums,v,ans,0);
+       // set<vector<int>> ans;
         vector<vector<int>>vpp;
-        for(auto it : ans){
-            vpp.push_back(it);
-        }
+        int n = pow(2,nums.size());
+        
+       for(int i=0; i<n; i++){
+           vector<int> v;
+           for(int j=0; j<nums.size(); j++){
+               if(i & (1<<j)) v.push_back(nums[j]);
+           }
+           vpp.push_back(v);
+       }
+           
         return vpp;
     }
 };

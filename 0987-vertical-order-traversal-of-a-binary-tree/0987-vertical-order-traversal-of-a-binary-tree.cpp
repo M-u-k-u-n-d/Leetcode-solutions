@@ -30,9 +30,7 @@ public:
         for(auto it : mpp){
                vector<int>col;
             for(auto p : it.second){
-                for(auto q : p.second){
-                    col.push_back(q);
-                }
+              col.insert(col.end(),p.second.begin(),p.second.end());
             }
                 ans.push_back(col);
         }

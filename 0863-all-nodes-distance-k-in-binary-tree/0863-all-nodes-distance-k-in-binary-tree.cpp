@@ -34,7 +34,7 @@ public:
         queue<TreeNode*> q;
         unordered_map<TreeNode*, bool> visited;
         q.push(target);
-        // visited[target] = true;
+        visited[target] = true;
         int cnt = 0;
         while(!q.empty()){
             if(cnt++ == k) break;
@@ -42,18 +42,18 @@ public:
             for(int i=0; i<size; i++){
                 TreeNode* current = q.front();
                 q.pop();
-                if(parent[current] and !visited[current]){
-                    q.push(parent[current]);
-                    visited[current] = true;
-                }
                 if(current->left and !visited[current->left]){
                     q.push(current->left);
                     visited[current->left] = true;
                 }
+                if(parent[current] and !visited[parent[current]]){
+                    q.push(parent[current]);
+                    visited[parent[current]] = true;
+                }
                 if(current->right and !visited[current->right]){
                     q.push(current->right);
                     visited[current->right] = true;
-                }
+                }   
             }
         }
         while(!q.empty()){

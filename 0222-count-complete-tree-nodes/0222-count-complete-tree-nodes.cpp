@@ -11,17 +11,31 @@
  */
 class Solution {
 //     Solution in O(n) Time Complexity
-    void preorder(TreeNode* root, int &ans){
-        if(root == NULL) return;
-        ans++;
-        if(root->left)  preorder(root->left,ans);
-        if(root->right) preorder(root->right, ans);
+    int left_height(TreeNode* root){
+        if(root == NULL) return 0;
+        return 1+left_height(root->left);
+    }
+    int right_height(TreeNode* root){
+        if(root == NULL) return 0;
+        return 1+right_height(root->right);
+    }
+    int completeNodes(TreeNode* root){
+        if(root == NULL) return 0;
+        int lftheight = left_height(root->left);
+        int rgtheight = right_height(root->right);
+        if(lftheight == rgtheight) {
+            // cout << lftheight <<" "<<rgtheight<<endl;
+            int hgt = 1 + lftheight;
+            int ans = pow(2,hgt) - 1;
+            return ans;
+        }
+        else{
+            return 1 + completeNodes(root->left) + completeNodes(root->right);
+        }
     }
 public:
     int countNodes(TreeNode* root) {
         if(root == NULL) return 0;
-        int ans = 0;
-        preorder(root,ans);
-        return ans;
+        return 1 + completeNodes(root->left) + completeNodes(root->right);
     }
 };

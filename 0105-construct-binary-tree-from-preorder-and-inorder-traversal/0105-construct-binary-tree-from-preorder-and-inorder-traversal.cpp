@@ -1,5 +1,5 @@
 class Solution {
-    TreeNode* builtTree(vector<int>&preorder,int prestart,int preend,vector<int>&inorder,int instart,int inend,map<int,int>&hashmap){
+    TreeNode* builtTree(vector<int>&preorder,int prestart,int preend,vector<int>&inorder,int instart,int inend,unordered_map<int,int>&hashmap){
         if(instart > inend || prestart > preend) return NULL;
         TreeNode* root = new TreeNode(preorder[prestart]);
         int inroot = hashmap[root->val];
@@ -10,7 +10,7 @@ class Solution {
     }
 public:
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        map<int,int> hashmap;
+        unordered_map<int,int> hashmap;
        for(int i=0; i<inorder.size(); i++){
            hashmap[inorder[i]] = i;
        }

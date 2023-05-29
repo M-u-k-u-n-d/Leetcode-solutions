@@ -10,19 +10,17 @@
  * };
  */
 class Solution {
-    void f(TreeNode* root, vector<int> &inorder){
-        if(root == NULL) return;
-        if(root->left) f(root->left,inorder);
-        inorder.push_back(root->val);
-        if(root->right) f(root->right,inorder);
+    bool f(TreeNode* root, long long lft, long long rgt ){
+       if(root == NULL) return true;
+        if(root->val >= rgt or root->val <= lft) return false;
+         return f(root->left,lft,root->val) and f(root->right,root->val,rgt);
+        // if(root->right) return f(root->right,root->val,rgt);
     }
 public:
     bool isValidBST(TreeNode* root) {
-        vector<int> inorder;
-        f(root,inorder);
-        for(int i=1; i<inorder.size(); i++){
-            if(inorder[i] <= inorder[i-1]) return false;
-        }
-        return true;
+     long long lft = INT_MIN, rgt = INT_MAX;
+        rgt++;
+        lft--;
+        return  f(root,lft,rgt);
     }
 };

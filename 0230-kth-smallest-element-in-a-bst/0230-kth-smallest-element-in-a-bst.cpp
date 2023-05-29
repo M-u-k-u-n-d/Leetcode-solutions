@@ -10,18 +10,24 @@
  * };
  */
 class Solution {
-    void preorder(TreeNode* &root, vector<int> &arr){
+//     IN INORDER TRAVERSAL FOR BST IT GIVES ELEMENT IN SORTED ORDER
+    void inorder(TreeNode* &root, int k , vector<int>&arr){
         if(root == NULL) return;
-        arr.push_back(root->val);
-        if(root->left) preorder(root->left,arr);
-        if(root->right) preorder(root->right,arr);
-        return;
+           if(root->left){
+            inorder(root->left, k,arr);
+           }
+             arr.push_back(root->val);
+        if(root->right) {
+            inorder(root->right,k,arr);
+            }
+        return ;    
     }
 public:
     int kthSmallest(TreeNode* root, int k) {
         vector<int> arr;
-        preorder(root,arr);
-        sort(arr.begin(),arr.end());
+         inorder(root,k,arr);
+        // for(auto it : arr) cout << it <<" ";
+        // cout << endl;
         return arr[k-1];
     }
 };

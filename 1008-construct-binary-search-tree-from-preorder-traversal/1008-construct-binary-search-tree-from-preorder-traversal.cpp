@@ -10,33 +10,26 @@
  * };
  */
 class Solution {
-    void constructPreorder(int key,TreeNode* &root){
-        if(root->val > key){
-            if(root->left == NULL){
-                TreeNode* tmp = new TreeNode(key);
-                root->left = tmp;
-                return;
-            }
-            else {
-                constructPreorder(key,root->left);
-            }
-        }
-        else {
-            if(root->right == NULL){
-                TreeNode* tmp = new TreeNode(key);
-                root->right = tmp;
-                return;
-            }
-            else {
-                constructPreorder(key,root->right);
-            }
-        }
+    TreeNode* f(vector<int>preorder,int prestart,int preend,vector<int>inorder,int instart,int inend,map<int,int>mpp){
+        if(prestart > preend || instart > inend) return NULL;
+        int inroot = mpp[preorder[prestart]];
+        int numsleft = inroot - instart;
+        TreeNode* root = new TreeNode(inorder[inroot]);
+        root->left = f(preorder,prestart+1,prestart+numsleft,inorder,instart,inroot-1,mpp);
+        root->right = f(preorder,prestart+numsleft+1,preend,inorder,inroot+1,inend,mpp);
+        return root;
     }
+   
 public:
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-        TreeNode* root = new TreeNode(preorder[0]);
-        for(int i=1; i<preorder.size(); i++)
-        constructPreorder(preorder[i],root);
-        return root;
+        vector<int> inorder = preorder;
+        sort(inorder.begin(),inorder.end());
+        int instart = 0, inend = inorder.size()-1, prestart = 0, preend = preorder.size()-1;
+        // TreeNode* root = new TreeNode(preorder[0]);    
+        map<int,int>mpp;
+        for(int i=0; i<inorder.size(); i++){
+            mpp[inorder[i]] = i;
+        }
+       return f(preorder,prestart,preend,inorder,instart,inend,mpp);
     }
 };

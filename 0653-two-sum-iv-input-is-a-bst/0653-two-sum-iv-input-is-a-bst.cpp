@@ -20,10 +20,11 @@ public:
     bool findTarget(TreeNode* root, int k) {
         vector<int> v;
         inorder(root,v);
-        for(int i=0; i<v.size(); i++){
-                int num = k-v[i];
-            int ind = lower_bound(v.begin(),v.end(),num) - v.begin();
-            if(ind != i and ind < v.size() and v[ind] == num) return true;
+        int l=0,r=v.size()-1;
+        while(l<r){
+            if(v[l]+v[r] == k) return true;
+            else if(v[l]+v[r] < k) l++;
+            else r--;
         }
         return false;
     }

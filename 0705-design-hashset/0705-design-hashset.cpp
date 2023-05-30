@@ -1,17 +1,17 @@
 class MyHashSet {
-    map<int,int> mpp;
+    set<int> s;
 public:
     MyHashSet() {
         
     }
     void add(int key) {
-        ++mpp[key];
+        s.insert(key);
     }
     void remove(int key) {
-        mpp[key] = 0;
+        s.erase(key);
     }
     bool contains(int key) {
-        if(mpp[key] > 0) return true;
+        if(s.find(key) != s.end()) return true;
         return false;
     }
 };

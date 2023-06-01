@@ -10,19 +10,27 @@
  * };
  */
 class Solution {
-void    f(TreeNode* root, TreeNode* &prev){
+    void f(TreeNode* root,vector<TreeNode*> &v){
         if(root == NULL) return;
-        if(root->right) f(root->right,prev);
-        if(root->left) f(root->left,prev);
-        root->right = prev;
-        root->left = NULL;
-        prev = root;
+          v.push_back(root);
+        if(root->left) f(root->left,v);
+        if(root->right) f(root->right,v);
         return;
     }
-   
 public:
     void flatten(TreeNode* root) {
-      TreeNode* prev = NULL;
-      f(root,prev);
+        if(root == NULL) return;
+       vector<TreeNode*> v;
+        f(root,v);
+        root = v[0];
+        TreeNode* prev = root;
+        for(int i=1; i<v.size(); i++){
+            
+            TreeNode* curr = v[i];
+            prev->right = curr;
+            prev->left = NULL;
+            prev = curr;
+            // cout << curr->val <<" "<<prev->val<<endl;
+        }
     }
 };

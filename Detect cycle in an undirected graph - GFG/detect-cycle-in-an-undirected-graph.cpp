@@ -4,25 +4,18 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution {
-   bool check(int src, int vis[], vector<int> adj[]){
-         queue<pair<int,int>> q;
-         vis[src] = 1;
-         q.push({src,-1});
-         while(!q.empty()){
-             int parent = q.front().second;
-             int source = q.front().first;
-             q.pop();
-             int size = adj[source].size();
-             for(auto num : adj[source]){
-             if(vis[num] == 0){
-                 vis[num] = 1;
-                 q.push({num,source});
-             }
-             else if(num != parent) return true;
-             }
-         }
-       return false;
-   }
+    bool dfs(int src,int parent, int vis[], vector<int> adj[]){
+                vis[src] = 1;
+                // int size = adj[src].size();
+                for(auto it : adj[src]){
+                    if(!vis[it]) {
+                        if(dfs(it,src,vis,adj)) return true;
+                    }
+                    else if(it != parent) return true;
+                }
+                return false;
+    }
+  
   public:
     // Function to detect cycle in an undirected graph.
     bool isCycle(int V, vector<int> adj[]) {
@@ -30,7 +23,7 @@ class Solution {
       
       for(int i=0; i<V; i++){
            if(vis[i] == 0){
-               if(check(i,vis,adj)) return true;
+               if(dfs(i,-1,vis,adj)) return true;
            }
       }
       return false;

@@ -1,14 +1,4 @@
 class Solution {
-    void dfs(int val,vector<int> &vis,vector<vector<int>> adj,stack<int> &st){
-        vis[val] = 1;
-        for(auto it : adj[val]){
-            if(!vis[it])    {
-                 dfs(it,vis,adj,st);
-            }
-        }
-         st.push(val);
-    }
-    
 public:
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
            vector<vector<int>> adj(numCourses);
@@ -38,19 +28,6 @@ public:
         }
         
         if(vec.size() != numCourses) return {};
-        vector<int> vis(numCourses,0);
-        stack<int> st;
-        for(int i=0; i<numCourses; i++){
-            if(!vis[i]){
-                dfs(i,vis,adj,st);
-            }
-        }
-        vector <int> ans;
-        while(!st.empty()){
-            ans.push_back(st.top());
-            st.pop();
-        }
-
-        return ans;
+        return vec;
     }
 };

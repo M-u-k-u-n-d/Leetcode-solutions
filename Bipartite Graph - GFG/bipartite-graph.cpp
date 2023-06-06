@@ -4,23 +4,16 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution {
-    bool bfs(int ind, vector<int> adj[], int color[]){
-        color[ind] = 0;
-        queue<int> q;
-        q.push(ind);
-        while(!q.empty()){
-            int curr = q.front();
-            q.pop();
-            int size = adj[curr].size();
-            for(int i=0; i<size; i++){
-                if(color[adj[curr][i]] == -1){
-                    color[adj[curr][i]] =  !color[curr];
-                    q.push(adj[curr][i]);
-                }
-                else if(color[adj[curr][i]] == color[curr]) return false;
-            }
-        }
-        return true;
+    bool dfs(int ind, vector<int> adj[], int color[],int prev){
+      color[ind] = prev;
+      
+      for(auto it : adj[ind]){
+          if(color[it] == -1){
+              if(!dfs(it,adj,color,!prev)) return false;
+          }
+          else if(color[it] == prev) return false;
+      }
+      return true;
     }
 public:
 	bool isBipartite(int V, vector<int>adj[]){
@@ -30,7 +23,7 @@ public:
 	    }
 	    for(int i=0; i<V; i++){
 	        if(color[i] == -1){
-	            if(!bfs(i,adj,color)) return false;
+	            if(!dfs(i,adj,color,0)) return false;
 	        }
 	    }
 	    return true;

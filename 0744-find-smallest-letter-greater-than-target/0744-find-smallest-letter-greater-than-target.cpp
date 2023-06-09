@@ -2,10 +2,10 @@ class Solution {
 public:
     char nextGreatestLetter(vector<char>& letters, char target) {
         char ans = letters[0];
-        sort(letters.begin(),letters.end());
-        for(int i=0; i<letters.size(); i++){
-            if(letters[i] > target) return letters[i];
-        }
+        if(upper_bound(letters.begin(),letters.end(),target) != letters.end()){
+            int ind = upper_bound(letters.begin(),letters.end(),target) - letters.begin();
+            return letters[ind];
+        }  
         return ans;
         
     }

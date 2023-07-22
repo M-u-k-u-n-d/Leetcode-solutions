@@ -1,5 +1,5 @@
 class Solution {
-    int f(vector<int> &nums,vector<int> &dp, int ind){
+    int f(vector<int> nums,vector<int> &dp, int ind){
        if(ind == 0) return nums[ind];
         if(ind < 0) return 0;
         if(dp[ind] != -1) return dp[ind];

@@ -1,14 +1,18 @@
 class Solution {
-int f(vector<vector<int>> &dp, int row , int col , int m, int n ){
-    if(row >= m || col >= n) return 0;
-    if(row == m-1 and col == n-1) return 1;
-    if(dp[row][col] != -1) return dp[row][col];
-    dp[row][col] = f(dp,row+1,col,m,n) + f(dp,row,col+1,m,n);
-    return dp[row][col];
-}
+// Tabulation
 public:
     int uniquePaths(int m, int n) {
-        vector<vector<int>> dp(m, vector<int> (n,-1));
-        return f(dp,0,0,m,n);
+        vector<vector<int>> dp(m, vector<int> (n,0));
+        dp[m-1][n-1] = 1;
+        for(int i=m-1; i>=0; i--){
+            for(int j = n-1; j>=0; j--){
+                int val1 =0, val2 =0;
+                if(i==m-1 and j == n-1) continue;
+                if(i != m-1) val1 = dp[i+1][j];
+                if(j != n-1) val2 = dp[i][j+1];
+                 dp[i][j] = val1+val2;
+            }
+        }
+        return dp[0][0];
     }
 };

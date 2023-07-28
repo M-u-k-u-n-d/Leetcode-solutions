@@ -1,15 +1,19 @@
 class Solution {
     
-    int f(vector<vector<int>>& arr,int row , int col,vector<vector<int>>& dp) {
-        if(row == arr.size()-1) return arr[row][col];
-        if(dp[row][col] != INT_MAX) return dp[row][col];
-        int val1 = arr[row][col]+f(arr,row+1,col,dp);
-        int val2 = arr[row][col] + f(arr,row+1,col+1,dp);
-        return dp[row][col] = min(val1,val2);
-    }
 public:
     int minimumTotal(vector<vector<int>>& triangle) {
-        vector<vector<int>> dp(triangle.size() , vector<int> (250, INT_MAX));
-        return f(triangle, 0,0,dp);
+        int n = triangle.size();
+        vector<vector<int>> dp(n,vector<int>(n, INT_MAX));
+        for(int i=0; i<n; i++){
+            dp[n-1][i] = triangle[n-1][i];
+        }
+        for(int i=n-2; i>= 0; i--){
+            for(int j=0; j<triangle[i].size(); j++){
+                    int val1 =  triangle[i][j]+ dp[i+1][j];
+                    int val2 =  triangle[i][j] + dp[i+1][j+1];
+                 dp[i][j] = min(val1,val2);
+            }
+        }
+        return *min_element(dp[0].begin(),dp[0].end());
     }
 };

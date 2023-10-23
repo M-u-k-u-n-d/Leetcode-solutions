@@ -1,13 +1,9 @@
 class Solution {
 public:
     bool isPowerOfFour(int n) {
-        int i=0;
-        if(__builtin_popcount(n) != 1) return false;
-        while(n>0){
-            n /= 2;
-            i++;
-        }
-        
-        return i&1;
+        if(n==0) return false;
+        double a = log(n)  / log(4);
+        if(ceil(a) == floor(a)) return true;
+        return false;
     }
 };

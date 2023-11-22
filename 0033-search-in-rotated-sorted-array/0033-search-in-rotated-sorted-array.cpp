@@ -8,12 +8,12 @@ class Solution {
                     if(a[l] <= target ) r = mid;
                     else  l= mid+1;
                 }  
-                else r=mid;
+                else r=mid-1;
             }
             else{
                if(a[mid] < a[l] and a[mid] < a[r]) {
                    if(a[l] > target) l = mid+1;
-                   else  r = mid;
+                   else  r = mid-1;
                }
                else   l = mid+1;
             }
@@ -23,10 +23,6 @@ class Solution {
         }
 public:
     int search(vector<int>& nums, int target) {
-        // if(nums.size() == 1) {
-        //     if(nums[0] == target) return 0;
-        //     return -1;
-        // }
         return f(0,nums.size()-1,nums,target);        
     }
 };

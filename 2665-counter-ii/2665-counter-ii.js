@@ -7,18 +7,15 @@ var createCounter = function(init) {
     var original = init;
     return {
     increment : () => {
-        init++;
-        return init;
+        return ++init;
     },
     
      decrement : () => {
-         init--;
-        return init;
+        return --init;
     },
     
     reset : () => {
-        init = original;
-        return init;
+        return init = original;
     }
     }
 };

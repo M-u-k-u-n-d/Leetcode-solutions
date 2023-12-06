@@ -1,42 +1,40 @@
 class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-        int m = nums1.size(), n = nums2.size();
-        if (m > n) {
-            swap(nums1, nums2);
-            swap(m, n);
-        }
-        int imin = 0, imax = m, half = (m + n + 1) / 2;
-        while (imin <= imax) {
-            int i = (imin + imax) / 2;
-            int j = half - i;
-            if (i < m && nums2[j - 1] > nums1[i]) {
-                imin = i + 1;
-            } else if (i > 0 && nums1[i - 1] > nums2[j]) {
-                imax = i - 1;
-            } else {
-                int left_max = 0;
-                if (i == 0) {
-                    left_max = nums2[j - 1];
-                } else if (j == 0) {
-                    left_max = nums1[i - 1];
-                } else {
-                    left_max = max(nums1[i - 1], nums2[j - 1]);
+        vector<int> merge;
+        
+        int n = nums1.size(), m = nums2.size();
+        int l=0,r=0;
+        while(l < n or  r < m ){
+            if(l == n){
+                merge.push_back(nums2[r]);
+                r++;
+            }
+            else if(r == m) {
+                merge.push_back(nums1[l]);
+                l++;
+            }
+            else{
+                if(nums1[l] > nums2[r]){
+                    merge.push_back(nums2[r]);
+                    r++;
                 }
-                if ((m + n) % 2 == 1) {
-                    return left_max;
+                else{
+                   merge.push_back(nums1[l]);
+                    l++; 
                 }
-                int right_min = 0;
-                if (i == m) {
-                    right_min = nums2[j];
-                } else if (j == n) {
-                    right_min = nums1[i];
-                } else {
-                    right_min = min(nums1[i], nums2[j]);
-                }
-                return (left_max + right_min) / 2.0;
             }
         }
-        return 0;
+        
+        int size = n + m;
+        double ans;
+        if(size%2 ){
+             ans = merge[size/2];
+        }
+        else{
+            ans = (merge[size/2-1] + merge[size/2])*1.0 / 2;
+        }
+        
+        return ans;
     }
 };

@@ -1,13 +1,17 @@
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        set<int> st;
-        for(auto it : nums){
-            if(st.find(it) == st.end()) {
-                st.insert(it);
-            }
-            else return it;
+        int slow = 0, fast = 0;
+       do{
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        } while(slow != fast);
+        slow = 0; 
+        while(slow != fast){
+            slow = nums[slow];
+            fast = nums[fast];
         }
-        return -1;
+        
+        return slow;
     }
 };
